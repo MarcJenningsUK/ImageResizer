@@ -13,6 +13,7 @@ namespace ImageResizer.Services
     {
         /// <summary>
         /// Resize the image to the specified width and height.
+        /// https://stackoverflow.com/a/24199315
         /// </summary>
         /// <param name="image">The image to resize.</param>
         /// <param name="madWidth">The width to resize to.</param>
