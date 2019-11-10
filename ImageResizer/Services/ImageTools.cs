@@ -13,13 +13,13 @@ namespace ImageResizer.Services
     {
         /// <summary>
         /// Resize the image to the specified width and height.
-        /// https://stackoverflow.com/a/24199315
+        /// 
         /// </summary>
         /// <param name="image">The image to resize.</param>
-        /// <param name="madWidth">The width to resize to.</param>
+        /// <param name="maxWidth">The width to resize to.</param>
         /// <param name="maxHeight">The height to resize to.</param>
         /// <returns>The resized image.</returns>
-        public static Bitmap ResizeImage(Image image, int madWidth, int maxHeight)
+        public static Bitmap ResizeImage(Image image, int maxWidth, int maxHeight)
         {
             Decimal ratio = (Decimal)image.Width / (Decimal)image.Height;
 
@@ -29,11 +29,11 @@ namespace ImageResizer.Services
             }
             if(ratio < 1)
             {
-                madWidth = (int)(madWidth / ratio);
+                maxWidth = (int)(maxWidth / ratio);
             }
 
-            var destRect = new Rectangle(0, 0, madWidth, maxHeight);
-            var destImage = new Bitmap(madWidth, maxHeight);
+            var destRect = new Rectangle(0, 0, maxWidth, maxHeight);
+            var destImage = new Bitmap(maxWidth, maxHeight);
 
             destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 

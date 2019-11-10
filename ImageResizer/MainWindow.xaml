@@ -32,15 +32,20 @@
                      Width="400"
                      Height="20"
                      Text="F:\output"/>
+            <ComboBox x:Name="sizesDropdown"
+                      Height="25"
+                      Width="75">
+            </ComboBox>
         </StackPanel>
 
         <Button Grid.Row="2" 
-                Content="Test"
+                Content="Resize"
                 Click="Button_Click"
                 Width="75" />
 
         <StackPanel Grid.Row="3">
-            
+            <TextBlock Text="waiting to resize." 
+                       x:Name="outputMessage"/>
         </StackPanel>
     </Grid>
 </Window>

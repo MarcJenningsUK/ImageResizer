@@ -24,6 +24,8 @@ namespace ImageResizer
         public MainWindow()
         {
             InitializeComponent();
+            sizesDropdown.ItemsSource = new List<int> { 64, 128, 256, 512, 1024 };
+            sizesDropdown.SelectedItem = 256;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -31,21 +33,35 @@ namespace ImageResizer
             
             DirectoryInfo di = new DirectoryInfo(InputFolderTB.Text);
             var files = di.GetFiles("*.jpg");
-                       
+
+            int maxDim = (int)sizesDropdown.SelectedItem;
+            
             int counter = 0;
+            int errors = 0;
+            StringBuilder messages = new StringBuilder();
 
             foreach (var filename in files)
             {
-                var input = System.Drawing.Image.FromFile(filename.FullName);
                 counter++;
-                
-                var output = Services.ImageTools.ResizeImage(input, 256, 256);
-                var outfile = System.IO.Path.Combine(OutputFolderTB.Text, "output-" + counter + ".jpg");
-                using (var str = new FileStream(outfile, FileMode.Create))
+                try
                 {
-                    output.Save(str, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    var input = System.Drawing.Image.FromFile(filename.FullName);
+
+                    var output = Services.ImageTools.ResizeImage(input, maxDim, maxDim);
+                    var outfile = System.IO.Path.Combine(OutputFolderTB.Text, "output-" + maxDim + "-" + counter + ".jpg");
+                    using (var str = new FileStream(outfile, FileMode.Create))
+                    {
+                        output.Save(str, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errors++;
+                    messages.Append(Environment.NewLine + ex.Message);
                 }
             }
+
+            outputMessage.Text = String.Format("Converted {0} images with {1} errors. {2}", counter, errors, messages);
         }
     }
 }
