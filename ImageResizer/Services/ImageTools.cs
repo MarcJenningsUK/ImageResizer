@@ -29,7 +29,7 @@ namespace ImageResizer.Services
             }
             if(ratio < 1)
             {
-                maxWidth = (int)(maxWidth / ratio);
+                maxWidth = (int)(maxWidth * ratio);
             }
 
             var destRect = new Rectangle(0, 0, maxWidth, maxHeight);

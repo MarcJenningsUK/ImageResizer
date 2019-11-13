@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -46,9 +47,9 @@ namespace ImageResizer
                 try
                 {
                     var input = System.Drawing.Image.FromFile(filename.FullName);
-
+                    var name = filename.Name.Substring(0, filename.Name.Length - 4);
                     var output = Services.ImageTools.ResizeImage(input, maxDim, maxDim);
-                    var outfile = System.IO.Path.Combine(OutputFolderTB.Text, "output-" + maxDim + "-" + counter + ".jpg");
+                    var outfile = System.IO.Path.Combine(OutputFolderTB.Text, name + "-" + maxDim + ".jpg");
                     using (var str = new FileStream(outfile, FileMode.Create))
                     {
                         output.Save(str, System.Drawing.Imaging.ImageFormat.Jpeg);
